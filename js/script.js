@@ -9,6 +9,31 @@ Physics(function(world){
     ,height: viewHeight
     ,meta: false		// setting it to "true" will display FPS
   });
+
+  // var pentagon = Physics.body('convex-polygon', {
+  //     // place the centroid of the polygon at (300, 200)
+  //     x: 300,
+  //     y: 200,
+  //     // the centroid is automatically calculated and used to position the shape
+  //     vertices: [
+  //         { x: 0, y: -30 },
+  //         { x: -29, y: -9 },
+  //         { x: -18, y: 24 },
+  //         { x: 18, y: 24 },
+  //         { x: 29, y: -9 }
+  //     ]
+  // });
+  var polygon = Physics.body('convex-polygon', {
+    vertices: [
+                { x: 100, y: 0 },
+                { x: 50, y: -50 },
+                { x: -50, y: -50 },
+                { x: -100, y: 0 },
+                { x: 0, y: 100 }
+              ]
+            });
+  // world.add(polygon);
+
   world.add(renderer);
   world.on('step', function(){
     world.render();
@@ -33,13 +58,16 @@ Physics(function(world){
   world.add(edgeBounce);
   world.add(bodyBounce);
 
-  var box = Physics.body('rectangle',{
-    x: viewWidth/2
-    ,y: viewHeight/2
-    ,width: viewWidth
-    ,height: viewHeight
-  });
-  world.add(box);
+  // var box = Physics.body('rectangle',{
+  //   x: viewWidth/2
+  //   ,y: viewHeight/2
+  //   ,width: viewWidth
+  //   ,height: viewHeight
+  // });
+  // world.add(box);
+
+  var vector = Physics.vector(3, 4);
+
   // Balls
   var ball = Physics.body('circle', {
     radius: 20
