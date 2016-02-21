@@ -4,7 +4,7 @@ html, body {
 }
 
 #dropperSpace{
-  /*background-color: black;*/
+  background-color: black;
   position: relative;
   border: 1px black solid;
 }

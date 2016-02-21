@@ -33,6 +33,13 @@ Physics(function(world){
   world.add(edgeBounce);
   world.add(bodyBounce);
 
+  var box = Physics.body('rectangle',{
+    x: viewWidth/2
+    ,y: viewHeight/2
+    ,width: viewWidth
+    ,height: viewHeight
+  });
+  world.add(box);
   // Balls
   var ball = Physics.body('circle', {
     radius: 20
@@ -55,6 +62,8 @@ Physics(function(world){
       world.add(Physics.body('circle', {
         x: px
         ,y: py
+        ,vx: 0.2
+        ,vy: -0.3
         ,radius: 20
         ,restitution: 1.9
       }));
