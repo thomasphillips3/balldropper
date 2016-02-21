@@ -38,7 +38,6 @@ Physics(function(world){
     ,vy: 0.4
     ,restitution: 1.9
   });
-  world.add(ball);
 
   // Recalculate the bounds when the window is resized
   window.addEventListener('resize', function() {
