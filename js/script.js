@@ -10,10 +10,15 @@ Physics(function(world){
     ,meta: false		// setting it to "true" will display FPS
   });
   world.add(renderer);
-
-  world.on('step', function() {
+  world.on('step', function(){
     world.render();
   });
+
+  // Recalculate the bounds when the window is resized
+  window.addEventListener('resize', function() {
+    viewportBounds = Physics.aabb(0, 0, renderer.width, renderer.height);
+    edgeBounce.setAABB(viewportBounds);
+  }, true);
 
   // Behaviors
   var gravity = Physics.behavior('constant-acceleration');
@@ -24,52 +29,31 @@ Physics(function(world){
   var bodyBounce = [ Physics.behavior('body-impulse-response')
                     ,Physics.behavior('body-collision-detection')
                     ,Physics.behavior('sweep-prune')];
-
   world.add(gravity);
   world.add(edgeBounce);
   world.add(bodyBounce);
 
+  // Balls
   var ball = Physics.body('circle', {
-    x: 5
-    ,y: 0
-    ,radius: 20
-    ,vx: 0.2
-    ,vy: 0.4
+    radius: 20
     ,restitution: 1.9
   });
 
-  // Recalculate the bounds when the window is resized
-  window.addEventListener('resize', function() {
-    viewportBounds = Physics.aabb(0, 0, renderer.width, renderer.height);
-    edgeBounce.setAABB(viewportBounds);
-  }, true);
-
-  // render on each step
-  world.on('step', function(){
-    // this.state.angular.pos += .02;
-    world.render();
-  });
-
-  // Handle click events
+  // Add a ball where the mouse is clicked
   $('#dropperSpace').click(function(e){
-    // checking canvas coordinates for the mouse click
     var offset = $(this).offset();
     var px = e.pageX - offset.left;
     var py = e.pageY - offset.top;
-
-    // this is the way physicsjs handles 2d vectors, similar at Box2D's b2Vec
     var mousePos = Physics.vector();
-    mousePos.set(px,py);
-    // finding a body under mouse position
 
+    mousePos.set(px,py);
     var body = world.findOne({
       $at: mousePos
     })
 
-    // there isn't any body under mouse position, going to create a new box
     if(!body){
       world.add(Physics.body('circle', {
-         x: px
+        x: px
         ,y: py
         ,radius: 20
         ,restitution: 1.9
@@ -80,11 +64,11 @@ Physics(function(world){
     }
   });
 
-  // subscribe to ticker to advance the simulation
+  // Subscribe to ticker to advance the simulation
   Physics.util.ticker.on(function( time, dt ){
       world.step( time );
   });
 
-  // start the ticker
+  // Start the ticker
   Physics.util.ticker.start();
 });
