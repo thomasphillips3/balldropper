@@ -1,7 +1,6 @@
 Physics(function(world){
 
   // Renderer
-
   var viewWidth = 640;
   var viewHeight = 480;
   var renderer = Physics.renderer('canvas', {
@@ -45,23 +44,11 @@ Physics(function(world){
     edgeBounce.setAABB(viewportBounds);
   }, true);
 
-
   // render on each step
   world.on('step', function(){
     // this.state.angular.pos += .02;
     world.render();
   });
-
-  // Add behaviors to the world
-  world.add([
-    // Make objects bounce off canvas bounds
-    Physics.behavior('body-impulse-response'),
-    // Add Gravity to pull objects downward
-    Physics.behavior('constant-acceleration'),
-    // Make bodies bounce off each other
-    Physics.behavior('body-collision-detection'),
-    Physics.behavior('sweep-prune')
-  ]);
 
   // Handle click events
   $('#dropperSpace').click(function(e){
